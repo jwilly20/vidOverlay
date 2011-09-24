@@ -38,8 +38,6 @@ def parseEDFASC(filename):
 
 	For now, parses out a list of Fixation objects	
 	'''
-
-	# file we will parse
 	
 	fileToParse = open(filename)
 	print "Parsing file " + filename
