@@ -28,9 +28,9 @@ class Fixation:
 		return "{{ eye:{0} , stime: {1}, etime: {2}, \
 			dur: {3}, axp: {4}, ayp: {5}, aps: {6}}}".format(self.eye, self.stime, 			\
 										self.etime, self.dur, self.axp, self.ayp, self.aps)
-	def isRight(self):
+	def isRight():
 		return self.eye == 'R'
-	def isLeft(self):
+	def isLeft():
 		return self.eye == 'L'
 
 # Parses the edf ascii format into a data structure

@@ -28,7 +28,7 @@ def drawFixations(fixations, imageFile):
 	'''
 	rightDotColor = (0,255,0)
 	leftDotColor = (255,0,0)
-	durScale = 0.05			# direct relation of fixation duration to circle radius
+	durScale = 0.05
 	
 	
 	im = Image.open(imageFile)
