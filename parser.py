@@ -4,7 +4,8 @@
 
 import sys
 
-from FixationMod import *
+# module for Fixations, Saccades, etc.
+from Vision import *	
 
 # must pass a filename to parse
 if (len(sys.argv) < 2):

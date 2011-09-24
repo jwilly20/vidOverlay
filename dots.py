@@ -4,6 +4,7 @@
 
 import Image, ImageDraw
 import sys
+from Vision import *
 
 
 def drawCirc(drawInst, center, radius, color):
