@@ -34,7 +34,6 @@ fileToParseName = sys.argv[1]
 fileToParse = open(fileToParseName)
 print "Parsing file " + fileToParseName
 
-numFixations = 0
 fixations = []
 
 line = fileToParse.readline()
@@ -43,8 +42,6 @@ while (line != ''):
 	
 	if (len(splitLine) != 0):
 		if (splitLine[0] == "EFIX"):
-			numFixations += 1
-		
 			fix_eye   = splitLine[1]
 			fix_stime = int(splitLine[2])
 			fix_etime = int(splitLine[3])
@@ -53,14 +50,13 @@ while (line != ''):
 			fix_ayp   = float(splitLine[6])
 			fix_aps   = float(splitLine[7])
 			fixations.append(Fixation(fix_eye, fix_stime, fix_etime, fix_dur, fix_axp, fix_ayp, fix_aps))
-			print fixations[numFixations - 1]
 			print line ,
 
 	line = fileToParse.readline()
-# while end
+# end while
 
 
-print "\n\nNumber of fixations: " + str(numFixations/4)
+print "\n\nNumber of fixations: " + str(len(fixations)/2)
 
 
 
