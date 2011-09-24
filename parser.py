@@ -10,13 +10,13 @@ class Fixation:
 	Eyelink II Head Monted User Manual 2.14.pdf section 4.9.3.4
 	'''
 	def __init__(self, eye, stime, etime, dur, axp, ayp, aps):
-		self.eye = eye		# L for left, R for right
-		self.stime = stime  # start time
-		self.etime = etime 	# end time
-		self.dur = dur		# duration
-		self.axp = axp		# average x position
-		self.ayp = ayp		# average y position
-		self.aps = aps		# pupil size
+		self.eye = eye		# string: L for left, R for right
+		self.stime = stime  	# int: 	start time (msec timestamp)	
+		self.etime = etime 	# int: end time   (msec)
+		self.dur = dur		# int: duration
+		self.axp = axp		# float: average x position
+		self.ayp = ayp		# float: average y position
+		self.aps = aps		# float: pupil size
 		
 	def __str__(self):
 		return "{{ eye:{0} , stime: {1}, etime: {2}, dur: {3}, axp: {4}, ayp: {5}, aps: {6}}}".format(self.eye, self.stime, self.etime, self.dur, self.axp, self.ayp, self.aps)
@@ -37,12 +37,22 @@ fixations = []
 
 line = fileToParse.readline()
 while (line != ''):
-	splitLine = line.split(' ')	
+	splitLine = line.split()	
 	
-	if (splitLine[0] == "EFIX"):
-		numFixations += 1
-		fixations.append(Fixation(splitLine[1], splitLine[2], splitLine[3], splitLine[4], splitLine[5], splitLine[6], splitLine[7]))
-		print line ,
+	if (len(splitLine) != 0):
+		if (splitLine[0] == "EFIX"):
+			numFixations += 1
+		
+			fix_eye   = splitLine[1]
+			fix_stime = int(splitLine[2])
+			fix_etime = int(splitLine[3])
+			fix_dur	  = int(splitLine[4])
+			fix_axp   = float(splitLine[5])
+			fix_ayp   = float(splitLine[6])
+			fix_aps   = float(splitLine[7])
+			fixations.append(Fixation(fix_eye, fix_stime, fix_etime, fix_dur, fix_axp, fix_ayp, fix_aps))
+			print fixations[numFixations - 1]
+			print line ,
 
 	line = fileToParse.readline()
 # while end
