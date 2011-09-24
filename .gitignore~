@@ -1,7 +1,9 @@
 
 
 # Use wildcards as well
-
+*~
+*.swp
+*.pyc
 overlay.jpg 
 
 
