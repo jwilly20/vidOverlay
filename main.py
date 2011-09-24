@@ -9,7 +9,7 @@ import dots
 
 # must pass a filename to parse
 if (len(sys.argv) < 2):
-	print "Usage: parser.py <filename.asc>"
+	print "Usage: main.py <filename.asc>"
 	sys.exit()		# exit the program
 
 # file we will parse
