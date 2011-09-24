@@ -1,4 +1,14 @@
 
+'''
+Vision.py
+
+Module for Vision classes for Fixations, Saccades, etc. as well as parsing
+tools for Vision type files.
+
+'''
+
+
+import sys	
 
 class Fixation:
 	'''
@@ -18,3 +28,42 @@ class Fixation:
 		return "{{ eye:{0} , stime: {1}, etime: {2}, \
 			dur: {3}, axp: {4}, ayp: {5}, aps: {6}}}".format(self.eye, self.stime, 			\
 										self.etime, self.dur, self.axp, self.ayp, self.aps)
+
+
+# Parses the edf ascii format into a data structure
+
+def parseEDFASC(filename):
+	'''
+	filename - filename of EDF ASC file to parse
+
+	For now, parses out a list of Fixation objects	
+	'''
+
+	# file we will parse
+	
+	fileToParse = open(filename)
+	print "Parsing file " + filename
+	fixations = []
+	
+	line = fileToParse.readline()
+	while (line != ''):
+		splitLine = line.split()	
+			
+		if (len(splitLine) != 0):
+			if (splitLine[0] == "EFIX"):
+				fix_eye   = splitLine[1]
+				fix_stime = int(splitLine[2])
+				fix_etime = int(splitLine[3])
+				fix_dur	  = int(splitLine[4])
+				fix_axp   = float(splitLine[5])
+				fix_ayp   = float(splitLine[6])
+				fix_aps   = float(splitLine[7])
+				fixations.append(Fixation(fix_eye, fix_stime, fix_etime, fix_dur, fix_axp, fix_ayp, fix_aps))
+				print line ,
+	
+		line = fileToParse.readline()
+	# end while
+
+	print "\n\nNumber of fixations: " + str(len(fixations)/2)
+
+	return fixations
