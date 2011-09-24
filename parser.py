@@ -19,7 +19,9 @@ class Fixation:
 		self.aps = aps		# float: pupil size
 		
 	def __str__(self):
-		return "{{ eye:{0} , stime: {1}, etime: {2}, dur: {3}, axp: {4}, ayp: {5}, aps: {6}}}".format(self.eye, self.stime, self.etime, self.dur, self.axp, self.ayp, self.aps)
+		return "{{ eye:{0} , stime: {1}, etime: {2}, \
+				dur: {3}, axp: {4}, ayp: {5}, aps: {6}}}".format(self.eye, self.stime, 			\
+										self.etime, self.dur, self.axp, self.ayp, self.aps)
 
 # must pass a filename to parse
 if (len(sys.argv) < 2):
