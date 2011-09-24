@@ -1,11 +1,12 @@
 
 
-# Draws dots on the screen based on fixations
+'''
+Overlays dots on an image based on fixations from a list of Fixation objects
+'''
 
 import Image, ImageDraw
 import sys
 from Vision import *
-
 
 def drawCirc(drawInst, center, radius, color):
 	'''
@@ -25,12 +26,14 @@ def drawFixations(fixations, imageFile):
 
 	Draws fixations as circles over the image file 
 	'''
-
+	dotColor = (255,0,0)
 	im = Image.open(imageFile)
 
 	draw = ImageDraw.Draw(im)
 
-	drawCirc(draw, (600,600), 20, (255,0,0))
+	while (len(fixations) != 0):
+		current = fixations.pop()
+		drawCirc(draw, (int(current.axp), int(current.ayp)), 20, dotColor)
 
-	im.save("yoyo.jpg", "JPEG")
+	im.save("overlay.jpg", "JPEG")
 
