@@ -58,11 +58,25 @@ def drawFixations(fixations, imageFile):
 
 	im.save("overlay.jpg", "JPEG")
 
-def drawFixationMovie(fixations, imageFile):
+def drawFixationMovie(fixations, imageFile, movieFPS):
   '''
-  fixations - list of Fixation objects
+  fixations - list of Fixation objects, with timestampts in milliseconds (msec)
   imageFile - filename of the image we will overlay fixations onto
+  movieFPS  - frames per second of the movie we watched
   '''
+  if (len(fixations) == 0): 
+    return
+  
+  # msec/frame bucket size
+  frameLength = 1000.0 / movieFPS
+    
+  # make the first fixation have start time 0 and shift all other fixations appropriately
+  timeStart = fixations[0].stime
+  shiftedFixations = map(lambda fix : Fixation(fix.eye, fix.stime - timeStart, fix.etime - timeStart, fix.dur, fix.axp, fix.ayp, fix.aps), fixations)
+  lastTimeStamp = max( map(lambda fix: fix.etime, shiftedFixations) )
+  
+  
+  
 
   rightDotColor = (0,255,0)	
   leftDotColor = (255,0,0)
@@ -92,6 +106,8 @@ def drawMovie(imageFile):
   Images can be converted to avi with the command
   ffmpeg -f image2 -i img%03d.jpg a.avi
   '''
+  
+  
   radius = 20
   im = Image.open(imageFile)
   draw = ImageDraw.Draw(im)
