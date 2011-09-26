@@ -63,11 +63,8 @@ def drawFixationMovie(fixations, imageFile):
   fixations - list of Fixation objects
   imageFile - filename of the image we will overlay fixations onto
   '''
-  print 'hello'
 
-  rightDotColor = (0,255,0)
-  print 'hello'
-  print 'hi'	
+  rightDotColor = (0,255,0)	
   leftDotColor = (255,0,0)
   durScale = 0.05			# direct relation of fixation duration to circle radius	
 
