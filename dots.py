@@ -69,14 +69,33 @@ def drawFixationMovie(fixations, imageFile, movieFPS):
   
   # msec/frame bucket size
   frameLength = 1000.0 / movieFPS
+  precision = 4
+  scaledFrameLength = int(round(frameLength * pow(10,precision), 0))    # used for frame bucket allocation
     
   # make the first fixation have start time 0 and shift all other fixations appropriately
   timeStart = fixations[0].stime
   shiftedFixations = map(lambda fix : Fixation(fix.eye, fix.stime - timeStart, fix.etime - timeStart, fix.dur, fix.axp, fix.ayp, fix.aps), fixations)
   lastTimeStamp = max( map(lambda fix: fix.etime, shiftedFixations) )
   
+  frameBuckets = {}    # hash of frame index to list of fixations
   
+  # initialize every bucket in frameBuckets as an empty list
+  scaledLastTimeStamp = lastTimeStamp * pow(10,precision)
+  finalBucket = scaledLastTimeStamp / scaledFrameLength
   
+  for i in range(1, finalBucket + 1):
+    frameBuckets[i] = []
+  
+  # assign fixations to buckets
+  for (fix in fixations):
+    scaledSTime = fix.stime * pow(10,precision)
+    firstBucket = scaledSTime / scaledFrameLength
+    
+    scaledETime = fix.etime * pow(10,precision)
+    lastBucket = scaledETime / scaledFrameLength
+    
+    for i in range(firstBucket, lastBucket + 1):
+      frameBuckets[i].append(fix)
 
   rightDotColor = (0,255,0)	
   leftDotColor = (255,0,0)
