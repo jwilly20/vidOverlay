@@ -17,6 +17,6 @@ fileToParseName = sys.argv[1]
 
 fixations = Vision.parseEDFASC(fileToParseName)
 
-dots.drawFixations(fixations, "image.jpg")
+dots.drawFixationMovie(fixations, "image.jpg")
 
 

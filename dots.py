@@ -75,9 +75,34 @@ def drawFixationMovie(fixations, imageFile):
   while (len(fixations) != 0):
     current = fixations.pop()
     if (current.isRight()):
-      drawCirc(draw, (int(current.axp), int(current.ayp)), int(durScale * current.dur), rightDotColor)
+      drawDot(draw, (int(current.axp), int(current.ayp)), int(durScale * current.dur), rightDotColor)
     if (current.isLeft()):
-      drawCirc(draw, (int(current.axp), int(current.ayp)), int(durScale * current.dur), leftDotColor)
+      drawDot(draw, (int(current.axp), int(current.ayp)), int(durScale * current.dur), leftDotColor)
 
   im.save("overlay.jpg", "JPEG")
+  
+def drawMovie(imageFile):
+  '''
+	fixations - a list of Fixation objects
+	imageFile - filename of the image we will overlay the fixations onto
+
+	Draws fixations as circles over the image file 
+	Outputs sequence of image files as image001.jpg, image002.jpg, etc.
+	
+  Images can be converted to avi with the command
+  ffmpeg -f image2 -i img%03d.jpg a.avi
+  '''
+  radius = 20
+  im = Image.open(imageFile)
+  draw = ImageDraw.Draw(im)
+
+  drawDot(draw, (20,20), radius, (255,0,0))
+  for i in range(1, 60):
+    print i
+    im.save("img" + "%03d" % i + ".jpg")
+	  
+  for i in range(60, 120):
+    print i
+    drawDot(draw, (100,100), radius, (255,0,0))
+    im.save("img" + "%03d" % i + ".jpg")
 
