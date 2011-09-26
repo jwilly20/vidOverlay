@@ -97,22 +97,21 @@ def drawFixationMovie(fixations, imageFile, movieFPS):
     for i in range(firstBucket, lastBucket + 1):
       frameBuckets[i].append(fix)
 
+
   rightDotColor = (0,255,0)	
   leftDotColor = (255,0,0)
   durScale = 0.05			# direct relation of fixation duration to circle radius	
 
-  im = Image.open(imageFile)
-
-  draw = ImageDraw.Draw(im)
-
-  while (len(fixations) != 0):
-    current = fixations.pop()
-    if (current.isRight()):
-      drawDot(draw, (int(current.axp), int(current.ayp)), int(durScale * current.dur), rightDotColor)
-    if (current.isLeft()):
-      drawDot(draw, (int(current.axp), int(current.ayp)), int(durScale * current.dur), leftDotColor)
-
-  im.save("overlay.jpg", "JPEG")
+  for i in range (1, finalBucket + 1):
+    im = Image.open(imageFile)
+    draw = ImageDraw.Draw(im)
+    for fix in frameBuckets[i]:    
+      if (fix.isRight()):
+        drawDot(draw, (int(fix.axp), int(fix.ayp)), int(durScale * fix.dur), rightDotColor)
+      if (fix.isLeft()):
+        drawDot(draw, (int(fix.axp), int(fix.ayp)), int(durScale * fix.dur), leftDotColor)
+      
+    im.save("img" + "%03d" % i + ".jpg")
   
 def drawMovie(imageFile):
   '''
