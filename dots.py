@@ -73,7 +73,7 @@ def drawFixationMovie(fixations, imageFile, movieFPS):
   scaledFrameLength = int(round(frameLength * pow(10,precision), 0))    # used for frame bucket allocation
     
   # make the first fixation have start time 0 and shift all other fixations appropriately
-  timeStart = fixations[0].stime
+  timeStart = fixations[0].stime   # we assume the first fixation is the first listed - may be bad assumption
   shiftedFixations = map(lambda fix : Fixation(fix.eye, fix.stime - timeStart, fix.etime - timeStart, fix.dur, fix.axp, fix.ayp, fix.aps), fixations)
   lastTimeStamp = max( map(lambda fix: fix.etime, shiftedFixations) )
   
@@ -83,16 +83,21 @@ def drawFixationMovie(fixations, imageFile, movieFPS):
   scaledLastTimeStamp = lastTimeStamp * pow(10,precision)
   finalBucket = scaledLastTimeStamp / scaledFrameLength
   
-  for i in range(1, finalBucket + 1):
+  print "final bucket = " + str(finalBucket)
+  
+  for i in range(0, finalBucket + 1):
     frameBuckets[i] = []
   
   # assign fixations to buckets
-  for (fix in fixations):
+  for fix in shiftedFixations:
     scaledSTime = fix.stime * pow(10,precision)
     firstBucket = scaledSTime / scaledFrameLength
     
     scaledETime = fix.etime * pow(10,precision)
     lastBucket = scaledETime / scaledFrameLength
+    
+    print "(" + str(firstBucket) + "," + str(lastBucket) + ")"
+    print "fix.stime = " + str(fix.stime) + ", fix.etime = " + str(fix.etime)
     
     for i in range(firstBucket, lastBucket + 1):
       frameBuckets[i].append(fix)
@@ -102,7 +107,8 @@ def drawFixationMovie(fixations, imageFile, movieFPS):
   leftDotColor = (255,0,0)
   durScale = 0.05			# direct relation of fixation duration to circle radius	
 
-  for i in range (1, finalBucket + 1):
+  for i in range (0, finalBucket + 1):
+    print "Frame " + str(i)
     im = Image.open(imageFile)
     draw = ImageDraw.Draw(im)
     for fix in frameBuckets[i]:    
@@ -111,7 +117,7 @@ def drawFixationMovie(fixations, imageFile, movieFPS):
       if (fix.isLeft()):
         drawDot(draw, (int(fix.axp), int(fix.ayp)), int(durScale * fix.dur), leftDotColor)
       
-    im.save("img" + "%03d" % i + ".jpg")
+    im.save("imgs/img" + "%04d" % i + ".jpg")
   
 def drawMovie(imageFile):
   '''
