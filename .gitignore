@@ -3,5 +3,5 @@
 # Use wildcards as well
 
 overlay.jpg 
-
+*.pyc
 
